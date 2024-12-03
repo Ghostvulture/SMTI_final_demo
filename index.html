@@ -19,9 +19,9 @@
     <!-- 热榜 -->
     <div class="hotlist">
         <h2>热榜</h2>
-        <div class="hot-item">1. 热点话题 1</div>
-        <div class="hot-item">2. 热点话题 2</div>
-        <div class="hot-item">3. 热点话题 3</div>
+        <div class="hot-item">#电子产品</div>
+        <div class="hot-item">#食品</div>
+        <div class="hot-item">#票务</div>
     </div>
 </div>
 
@@ -45,23 +45,23 @@
     <!-- 帖子区域 -->
     <div class="posts">
         <div class="post" onclick="showPostDetail('post1')">
-            <img src="https://www.w3schools.com/w3images/avatar2.png" class="avatar" alt="头像" onclick="goToChat('张三')">
+            <img src="https://www.w3schools.com/w3images/avatar2.png" class="avatar" alt="头像" onclick="goToChat('AAA老鼠药批发')">
             <div class="post-content">
                 <div class="post-title">二手屏幕</div>
                 <div class="post-body">去年双11买的，现在800出</div>
             </div>
             <div class="post-credits">
-                <span>信誉评分: ${users['张三'].creditScore}</span> <!-- 显示信誉评分 -->
+                <span>信誉评分: ${users['AAA老鼠药批发'].creditScore}</span> <!-- 显示信誉评分 -->
             </div>
         </div>
         <div class="post" onclick="showPostDetail('post2')">
-            <img src="https://www.w3schools.com/w3images/avatar2.png" class="avatar" alt="头像" onclick="goToChat('王五')">
+            <img src="https://www.w3schools.com/w3images/avatar2.png" class="avatar" alt="头像" onclick="goToChat('绝赞泥头车')">
             <div class="post-content">
                 <div class="post-title">出ipad pro 2018 11寸</div>
                 <div class="post-body">64g，使用率低，打算出掉，...</div>
             </div>
             <div class="post-credits">
-                <span>信誉评分: ${users['王五'].creditScore}</span> <!-- 显示信誉评分 -->
+                <span>信誉评分: ${users['绝赞泥头车'].creditScore}</span> <!-- 显示信誉评分 -->
             </div>
         </div>
         <div class="post" onclick="showPostDetail('post3')">
@@ -87,7 +87,7 @@
 
     <div class="post-detail">
         <div class="post-header">
-            <img src="pic_1.png" class="postAvatar" alt="头像" onclick="goToChat('张三')">
+            <img src="pic_1.png" class="postAvatar" alt="头像" onclick="goToChat('AAA老鼠药批发')">
             <div>
                 <div class="postTitle">二手屏幕</div>
                 <div class="postAuthor">AAA屏幕批发</div>
@@ -113,7 +113,7 @@
             <div class="comment">
                 <div class="comment-header">
                     <img src="https://www.w3schools.com/w3images/avatar2.png" class="comment-avatar" alt="头像">
-                    <div class="comment-author">王五</div>
+                    <div class="comment-author">绝赞泥头车</div>
                 </div>
                 <div class="comment-body">
                     这是第二条评论的内容。评论区展示用户对帖子内容的看法。
@@ -265,13 +265,25 @@
     <div class="chat-box" id="chatBox">
         <!-- 聊天内容 -->
     </div>
+
     <!-- 输入框 -->
     <div class="chat-input">
         <input type="text" id="chatInput" placeholder="请输入消息..." />
         <button onclick="sendMessage()">发送</button>
-        <label for="fileInput" class="upload-btn">上传</label>
-        <input type="file" id="fileInput" style="display:none;" onchange="previewFile()">
+
+        <!-- 加号按钮 -->
+        <button onclick="showOptionsMenu()">+</button>
     </div>
+
+    <!-- 操作选择弹窗 -->
+    <div id="optionsMenu" class="options-menu" style="display:none;">
+        <ul>
+            <li onclick="uploadFile()">上传文件</li>
+            <li onclick="rateUser()">信用评分</li>
+        </ul>
+    </div>
+
+    <!-- 文件上传区域 -->
     <div class="preview" id="filePreview"></div>
 </div>
 
@@ -287,7 +299,7 @@
     <div class="products">
         <!-- 商品1: 信小鹰 -->
         <div class="product">
-            <img src="https://www.w3schools.com/w3images/avatar2.png" class="avatar" alt="头像">
+            <img src="eagle.png" class="avatar" alt="头像">
             <div class="product-content">
                 <div class="product-title">信小鹰</div>
                 <div class="product-body">来自info</div>
@@ -295,19 +307,9 @@
             <button class="buy-button" onclick="buyProduct('信小鹰')">购买</button>
         </div>
 
-        <!-- 商品2: SMMG章鱼 -->
-        <div class="product">
-            <img src="https://www.w3schools.com/w3images/avatar2.png" class="avatar" alt="头像">
-            <div class="product-content">
-                <div class="product-title">章鱼</div>
-                <div class="product-body">SMMG</div>
-            </div>
-            <button class="buy-button" onclick="buyProduct('SMMG章鱼')">购买</button>
-        </div>
-
         <!-- 商品3: 红鸟 -->
         <div class="product">
-            <img src="https://www.w3schools.com/w3images/avatar2.png" class="avatar" alt="头像">
+            <img src="red_bird.png" class="avatar" alt="头像">
 
             <div class="product-content">
                 <div class="product-title">红鸟</div>
@@ -318,7 +320,7 @@
 
         <!-- 商品4: 塔塔 -->
         <div class="product">
-            <img src="https://www.w3schools.com/w3images/avatar2.png" class="avatar" alt="头像">
+            <img src="tata_pic.png" class="avatar" alt="头像">
             <div class="product-content">
                 <div class="product-title">塔塔</div>
                 <div class="product-body">来自创协</div>
@@ -384,17 +386,17 @@
 
     // 用户与群聊数据库
     const users = {
-        '张三': {
-            nickname: '张三',
+        'AAA老鼠药批发': {
+            nickname: 'AAA老鼠药批发',
             avatar: 'pic_1.png',
             creditScore: 90,
-            posts: ['post1'] // 张三的发帖记录
+            posts: ['post1'] // AAA老鼠药批发的发帖记录
         },
-        '王五': {
-            nickname: '王五',
+        '绝赞泥头车': {
+            nickname: '绝赞泥头车',
             avatar: 'pic_2.png',
             creditScore: 80,
-            posts: ['post2'] // 王五的发帖记录
+            posts: ['post2'] // 绝赞泥头车的发帖记录
         },
         '我': {
             nickname: '我',
@@ -412,25 +414,25 @@
     const posts = {
         'post1': {
             title: '老鼠药出售',
-            author: '张三',
+            author: 'AAA老鼠药批发',
             content: '去年双11买的，现在800出',
             timestamp: '2024-11-29 10:00',
             image:'pic_1.png',
             tag: '食品',
             comments: [
                 { author: '我', content: '呃这真的允许卖吗', avatar: 'pic_3.png'},
-                { author: '王五', content: '挺不错的，值得考虑。', avatar: 'pic_2.png'}
+                { author: '绝赞泥头车', content: '挺不错的，值得考虑。', avatar: 'pic_2.png'}
             ]
         },
         'post2': {
             title: '出ipad pro 2018 11寸',
-            author: '王五',
+            author: '绝赞泥头车',
             content: '64g，使用率低，打算出掉，...',
             timestamp: '2024-11-28 15:00',
             image:'pic_2.png',
             tag: '电子产品',
             comments: [
-                { author: '张三', content: '有需要的联系我，价格可以谈。', avatar: 'pic_1.png'}
+                { author: '绝赞泥头车', content: '有需要的联系我，价格可以谈。', avatar: 'pic_2.png'}
             ]
         },
         'post3': {
@@ -443,23 +445,39 @@
             comments: [
                 { author: '我', content: '把这个东西卖掉也太抽象了', avatar: 'pic_3.png'}
             ]
+        },
+        'post4': {
+            title: 'tb47电池拼单',
+            author: '我',
+            content: '二手tb47电池一块50，一块使用两次就能扔，有需要的联系我。型号：8.4V 400mAh锂电池；12.6V 300mAh锂电池；3.7V 1200mAh锂电池',
+            timestamp: '2024-10-29 11:00',
+            image:'tb47.png',
+            tag: '电子产品',
+            comments: [
+                { author: 'AAA老鼠药批发', content: '666666666666', avatar: 'pic_1.png'}
+            ]
         }
     };
 
     // 模拟的聊天数据库
     const chatDatabase = {
-        '张三': [
-            { sender: '我', content: '最近怎么样？', timestamp: '2024-11-29 09:00' },
-            { sender: '张三', content: '还不错，你呢？', timestamp: '2024-11-29 09:01' }
+        'AAA老鼠药批发': [
+            { sender: '我', content: '请问老鼠药的真实成分是什么？', timestamp: '2024-11-29 09:00' },
+            { sender: 'AAA老鼠药批发', content: '乌龙茶', timestamp: '2024-11-29 09:01' },
+            { sender: '我', content: '额疑似虚假宣传哈', timestamp: '2024-11-29 09:03' }
+
         ],
-        '王五': [
-            { sender: '我', content: '你好啊！', timestamp: '2024-11-29 08:30' },
-            { sender: '王五', content: '我很好，你呢？', timestamp: '2024-11-29 08:35' }
+        '绝赞泥头车': [
+            { sender: '我', content: '你这商品看起来最正常', timestamp: '2024-11-29 08:30' },
+            { sender: '绝赞泥头车', content: '其实AAA老鼠药批发是我小号', timestamp: '2024-11-29 08:35' },
+            { sender: '我', content: '这下不得不买了，请放菜鸟驿站处柜子', timestamp: '2024-11-29 08:40' },
+            { sender: '绝赞泥头车', content: '取件码4098', timestamp: '2024-11-29 08:50' }
+
         ],
         '拼单群': [
-            { sender: '我', content: '大家好久不见了～', timestamp: '2024-11-29 07:00' },
-            { sender: '张三', content: '是啊，什么时候拼单？', timestamp: '2024-11-29 07:05' },
-            { sender: '王五', content: '我也有兴趣，等大家决定！', timestamp: '2024-11-29 07:10' }
+            { sender: '我', content: '快来买绝赞鼓包电池～', timestamp: '2024-11-29 07:00' },
+            { sender: 'AAA老鼠药批发', content: '选A来30套，请发收款码', timestamp: '2024-11-29 07:05' },
+            { sender: '绝赞泥头车', content: '未付款，期待发货', timestamp: '2024-11-29 07:10' }
         ]
     };
 
@@ -490,6 +508,61 @@
         }
     }
 
+    // 显示操作选择菜单
+    function showOptionsMenu() {
+        const menu = document.getElementById('optionsMenu');
+        menu.style.display = 'block';
+    }
+
+    // 上传文件功能
+    function uploadFile() {
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*, application/pdf, .docx, .txt';
+        fileInput.onchange = function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const preview = document.getElementById('filePreview');
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    preview.innerHTML = ''; // 清空之前的预览
+                    preview.appendChild(img); // 显示预览
+                };
+
+                reader.readAsDataURL(file); // 读取文件
+            }
+        };
+        fileInput.click(); // 触发文件选择
+    }
+
+    // 给对方打分功能
+    function rateUser() {
+        const targetUser = prompt('请输入你想评分的用户昵称：');
+        if (!targetUser || !users[targetUser]) {
+            alert('无效的用户！');
+            return;
+        }
+
+        const rating = prompt('请输入评分（1 - 100）：');
+        const numericRating = parseInt(rating);
+
+        if (isNaN(numericRating) || numericRating < 1 || numericRating > 100) {
+            alert('评分无效，请输入1到100之间的数字。');
+            return;
+        }
+
+        // 更新目标用户的信用评分
+        const oldCredit = users[targetUser].creditScore;
+        const newCredit = (oldCredit + numericRating) / 2; // 新评分计算方式
+        users[targetUser].creditScore = newCredit;
+
+        alert(`已成功给 ${targetUser} 打分，新的信用评分是：${newCredit}`);
+        updateContactList(); // 更新联系人列表
+    }
+
     // 显示私聊记录
     function goToChat(contactName) {
         showPage('chat');
@@ -501,6 +574,24 @@
         messages.forEach(message => {
             const messageElement = document.createElement('div');
             messageElement.classList.add('message');
+
+            // 如果消息是文件类型，则显示预览
+            let messageContent = '';
+            if (message.type === 'text') {
+                messageContent = `<div class="content">${message.content}</div>`;
+            } else if (message.type === 'file') {
+                // 处理文件类型，假设文件类型为图片
+                messageContent = `<div class="content">
+                    <img src="${message.fileUrl}" class="file-preview" />
+                    <span>点击查看文件</span>
+                </div>`;
+            } else if (message.type === 'rating') {
+                // 处理评分类型的消息
+                messageContent = `<div class="content">
+                    <span>${message.sender} 给你打了一个评分: ${message.rating}</span>
+                </div>`;
+            }
+
             messageElement.innerHTML = `
                 <div class="sender">${message.sender}</div>
                 <div class="content">${message.content}</div>
