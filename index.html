@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二手交易平台</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 搜索栏子界面 -->
+<div id="search" class="content page" data-parent="home">
+    <button onclick="goBack()">返回</button>
+
+    <!-- 搜索栏 -->
+    <div class="search-bar">
+        <input type="text" class="search-input" placeholder="搜索...">
+    </div>
+    <!-- 热榜 -->
+    <div class="hotlist">
+        <h2>热榜</h2>
+        <div class="hot-item">1. 热点话题 1</div>
+        <div class="hot-item">2. 热点话题 2</div>
+        <div class="hot-item">3. 热点话题 3</div>
+    </div>
+</div>
+
+<!-- 首页 -->
+<div id="home" class="content page">
+    <!-- 搜索栏 -->
+    <div class="search-bar">
+        <input type="text" class="search-input" placeholder="搜索..." onclick="showPage('search')">
+    </div>
+
+    <!-- 标签区域 -->
+    <div class="tags">
+        <button class="tag-button" onclick="filterPostsByTag('电子产品')">电子产品</button>
+        <button class="tag-button" onclick="filterPostsByTag('食品')">食品</button>
+        <button class="tag-button" onclick="filterPostsByTag('书籍/资料')">书籍/资料</button>
+        <button class="tag-button" onclick="filterPostsByTag('交通工具')">交通工具</button>
+        <button class="tag-button" onclick="filterPostsByTag('生活用品')">生活用品</button>
+        <button class="tag-button" onclick="filterPostsByTag('票务')">票务</button>
+    </div>
+
+    <!-- 帖子区域 -->
+    <div class="posts">
+        <div class="post" onclick="showPostDetail('post1')">
+            <img src="https://www.w3schools.com/w3images/avatar2.png" class="avatar" alt="头像" onclick="goToChat('张三')">
+            <div class="post-content">
+                <div class="post-title">二手屏幕</div>
+                <div class="post-body">去年双11买的，现在800出</div>
+            </div>
+            <div class="post-credits">
+                <span>信誉评分: ${users['张三'].creditScore}</span> <!-- 显示信誉评分 -->
+            </div>
+        </div>
+        <div class="post" onclick="showPostDetail('post2')">
+            <img src="https://www.w3schools.com/w3images/avatar2.png" class="avatar" alt="头像" onclick="goToChat('王五')">
+            <div class="post-content">
+                <div class="post-title">出ipad pro 2018 11寸</div>
+                <div class="post-body">64g，使用率低，打算出掉，...</div>
+            </div>
+            <div class="post-credits">
+                <span>信誉评分: ${users['王五'].creditScore}</span> <!-- 显示信誉评分 -->
+            </div>
+        </div>
+        <div class="post" onclick="showPostDetail('post3')">
+            <img src="https://www.w3schools.com/w3images/avatar2.png" class="avatar" alt="头像" onclick="goToChat('我')">
+            <div class="post-content">
+                <div class="post-title">二手手机</div>
+                <div class="post-body">最新款的手机，几乎全新，出手便宜。</div>
+            </div>
+            <div class="post-credits">
+                <span>信誉评分: ${users['我'].creditScore}</span> <!-- 显示信誉评分 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 加号按钮 -->
+    <button class="add-post-btn" onclick="showPage('create-post')">+</button>
+</div>
+
+
+<!-- 帖子详情 -->
+<div id="post-detail" class="content page" data-parent="home">
+    <button onclick="goBack()">返回</button>
+
+    <div class="post-detail">
+        <div class="post-header">
+            <img src="pic_1.png" class="postAvatar" alt="头像" onclick="goToChat('张三')">
+            <div>
+                <div class="postTitle">二手屏幕</div>
+                <div class="postAuthor">AAA屏幕批发</div>
+            </div>
+        </div>
+        <div class="postBody">
+            去年双11买的，现在800出  
+        </div>
+        <img src="https://via.placeholder.com/800x400" alt="帖子图片" class="postImage">
+        
+        <!-- 评论区 -->
+        <div class="comments">
+            <h3>评论区</h3>
+            <div class="comment">
+                <div class="comment-header">
+                    <img src="https://www.w3schools.com/w3images/avatar2.png" class="comment-avatar" alt="头像">
+                    <div class="comment-author">李四</div>
+                </div>
+                <div class="comment-body">
+                    这是第一条评论的内容。可以是对帖子内容的讨论或者看法。
+                </div>
+            </div>
+            <div class="comment">
+                <div class="comment-header">
+                    <img src="https://www.w3schools.com/w3images/avatar2.png" class="comment-avatar" alt="头像">
+                    <div class="comment-author">王五</div>
+                </div>
+                <div class="comment-body">
+                    这是第二条评论的内容。评论区展示用户对帖子内容的看法。
+                </div>
+            </div>
+        </div>
+
+        <!-- 发帖时间 -->
+        <div class="postTimestamp" style="position: absolute; bottom: 10px; right: 10px; font-size: 12px; color: #777;">
+            发布时间: 2024-11-29 10:00
+        </div>
+    </div>
+</div>
+
+<!-- 写帖子页面 -->
+<div id="create-post" class="content page" data-parent="home">
+    <button onclick="goBack()">返回</button>
+
+    <h2>写帖子</h2>
+    <div class="create-post-form">
+        <!-- 标题输入框 -->
+        <label for="postTitle">标题:</label>
+        <input type="text" id="postTitle" placeholder="请输入标题" required>
+
+        <!-- 内容输入框 -->
+        <label for="postContent">内容:</label>
+        <textarea id="postContent" placeholder="请输入内容" required></textarea>
+
+        <!-- 上传图片 -->
+        <label for="postImage">上传图片:</label>
+        <input type="file" id="postImage" onchange="previewImage(event)">
+
+        <!-- 标签选择 -->
+        <label for="postTags">选择标签:</label>
+        <select id="postTags">
+            <option value="电子产品">电子产品</option>
+            <option value="食品">食品</option>
+            <option value="书籍/资料">书籍/资料</option>
+            <option value="交通工具">交通工具</option>
+            <option value="生活用品">生活用品</option>
+            <option value="票务">票务</option>
+        </select>
+
+        <!-- 发布按钮 -->
+        <button onclick="submitPost()">发布</button>
+    </div>
+
+    <!-- 图片预览 -->
+    <div id="imagePreview" style="margin-top: 20px;"></div>
+</div>
+
+
+<!-- 存取界面 -->
+<div id="storage" class="content page">
+    <h2>存取界面</h2>
+    <div class="store-option">
+        <button onclick="showPage('transaction')">1. 存货/取货</button>
+        <button onclick="showPage('history')">2. 历史记录</button>
+    </div>
+</div>
+
+<!-- 存货/取货界面 -->
+<div id="transaction" class="content page">
+    <h2>存货/取货</h2>
+    <div class="transaction-option">
+        <label for="action">选择操作：</label>
+        <select id="action" onchange="toggleTransactionOption()">
+            <option value="store">存货</option>
+            <option value="retrieve">取货</option>
+        </select>
+
+        <!-- 存货/取货详细信息 -->
+        <div id="storeOption">
+            <label for="orderSelect">选择已发起的订单：</label>
+            <select id="orderSelect">
+                <option value="order1">订单1</option>
+                <option value="order2">订单2</option>
+                <option value="order3">订单3</option>
+            </select>
+
+            <!-- 学校地图 -->
+            <div id="map" style="width: 100%; height: 700px; margin-top: 10px; position: relative;">
+                <!-- 使用简单的图片地图模拟 -->
+                <img src="map.png" style="width: 100%; height: 100%; border: 2px solid #ccc;" alt="学校地图" id="campusMap">
+                <div id="mapOverlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+                    <!-- 存货柜子位置的按钮 -->
+                    <button class="map-btn" style="position: absolute; top: 30%; left: 40%;" onclick="selectStorageSpot('柜子1')">柜子1</button>
+                    <button class="map-btn" style="position: absolute; top: 60%; left: 50%;" onclick="selectStorageSpot('柜子2')">柜子2</button>
+                    <button class="map-btn" style="position: absolute; top: 70%; left: 20%;" onclick="selectStorageSpot('柜子3')">柜子3</button>
+                </div>
+            </div>
+
+            <!-- 生成确认码 -->
+            <div id="storageCode" style="margin-top: 20px; display: block;">
+                <label>存货确认码：</label>
+                <input type="text" id="confirmCode" readonly>
+                <button onclick="copyCode()">复制</button>
+            </div>
+
+            <!-- 确定按钮 -->
+            <button id="confirmButton" onclick="generateConfirmationCode()">确定</button>
+
+        </div>
+
+        <!-- 取货操作 -->
+        <div id="retrieveOption" style="display: none;">
+            <label for="retrievalCode">请输入取件码：</label>
+            <input type="text" id="retrievalCode" maxlength="4" placeholder="四位数取件码">
+            <button onclick="retrieveItem()">确定</button>
+            <div id="retrieveMessage" style="margin-top: 20px;"></div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- 历史记录界面 -->
+<div id="history" class="content page">
+    <h2>历史记录</h2>
+    <ul class="history-list">
+        <li class="history-item">
+            <span>订单1</span>
+            <span>进行中</span>
+        </li>
+        <li class="history-item">
+            <span>订单2</span>
+            <span>已结束</span>
+        </li>
+        <li class="history-item">
+            <span>订单3</span>
+            <span>进行中</span>
+        </li>
+    </ul>
+</div>
+
+
+<!-- 私聊历史联系人列表 -->
+<div id="chat-list" class="content page">
+    <h2>历史聊天</h2>
+    <ul class="contact-list" id="contactList">
+        <!-- 动态加载联系人列表 -->
+    </ul>
+</div>
+
+<!-- 私聊页面 -->
+<div id="chat" class="content page" data-parent="chat-list">
+    <button onclick="goBack()">返回</button>
+
+    <div class="chat-box" id="chatBox">
+        <!-- 聊天内容 -->
+    </div>
+    <!-- 输入框 -->
+    <div class="chat-input">
+        <input type="text" id="chatInput" placeholder="请输入消息..." />
+        <button onclick="sendMessage()">发送</button>
+        <label for="fileInput" class="upload-btn">上传</label>
+        <input type="file" id="fileInput" style="display:none;" onchange="previewFile()">
+    </div>
+    <div class="preview" id="filePreview"></div>
+</div>
+
+
+<!-- 商店页面 -->
+<div id="store" class="content page">
+    <!-- 搜索栏 -->
+    <div class="search-bar">
+        <input type="text" class="search-input" placeholder="搜索..." onclick="showPage('search')">
+    </div>
+
+    <!-- 商品区域 -->
+    <div class="products">
+        <!-- 商品1: 信小鹰 -->
+        <div class="product">
+            <img src="https://www.w3schools.com/w3images/avatar2.png" class="avatar" alt="头像">
+            <div class="product-content">
+                <div class="product-title">信小鹰</div>
+                <div class="product-body">来自info</div>
+            </div>
+            <button class="buy-button" onclick="buyProduct('信小鹰')">购买</button>
+        </div>
+
+        <!-- 商品2: SMMG章鱼 -->
+        <div class="product">
+            <img src="https://www.w3schools.com/w3images/avatar2.png" class="avatar" alt="头像">
+            <div class="product-content">
+                <div class="product-title">章鱼</div>
+                <div class="product-body">SMMG</div>
+            </div>
+            <button class="buy-button" onclick="buyProduct('SMMG章鱼')">购买</button>
+        </div>
+
+        <!-- 商品3: 红鸟 -->
+        <div class="product">
+            <img src="https://www.w3schools.com/w3images/avatar2.png" class="avatar" alt="头像">
+
+            <div class="product-content">
+                <div class="product-title">红鸟</div>
+                <div class="product-body">红火火</div>
+            </div>
+            <button class="buy-button" onclick="buyProduct('红鸟')">购买</button>
+        </div>
+
+        <!-- 商品4: 塔塔 -->
+        <div class="product">
+            <img src="https://www.w3schools.com/w3images/avatar2.png" class="avatar" alt="头像">
+            <div class="product-content">
+                <div class="product-title">塔塔</div>
+                <div class="product-body">来自创协</div>
+            </div>
+            <button class="buy-button" onclick="buyProduct('塔塔')">购买</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- 商店帖子详情页 -->
+<div id="post-detail" class="content page" data-parent="store">
+    <button onclick="goBack()">返回</button>
+
+    <h2>商品详情</h2>
+    <div class="post-detail-content">
+        <img src="https://www.w3schools.com/w3images/avatar2.png" alt="头像" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 15px;">
+        <div class="post-detail-title">商品标题</div>
+        <div class="post-detail-body">
+            <p>商品详细描述，包含所有信息，用户可以在这里查看商品的详细内容。</p>
+        </div>
+    </div>
+</div>
+
+
+<!-- 导航栏 -->
+<nav>
+    <a href="#" onclick="showPage('home')">首页</a>
+    <a href="#" onclick="showPage('storage')">存取</a>
+    <a href="#" onclick="showPage('chat-list')">私聊</a>
+    <a href="#" onclick="showPage('store')">商店</a>
+</nav>
+
+<!-- JavaScript -->
+<script>
+
+    let currentTagFilter = null; // 当前选中的标签，默认无过滤
+
+
+    // 显示对应的页面
+    function showPage(pageId) {
+        // 隐藏所有页面
+        const pages = document.querySelectorAll('.page');
+        pages.forEach(page => page.style.display = 'none');
+
+
+
+        // 显示对应的页面
+        const activePage = document.getElementById(pageId);
+
+        // 如果是首页，重置标签过滤器并刷新帖子列表
+        if (pageId === 'home') {
+            console.log('显示首页并清零');
+            currentTagFilter = null;  // 重置标签过滤器
+            // displayPosts();  // 刷新帖子列表，显示所有帖子
+        }
+
+        activePage.style.display = 'block';
+    }
+
+    // 默认显示首页
+    showPage('home');
+
+    // 用户与群聊数据库
+    const users = {
+        '张三': {
+            nickname: '张三',
+            avatar: 'pic_1.png',
+            creditScore: 90,
+            posts: ['post1'] // 张三的发帖记录
+        },
+        '王五': {
+            nickname: '王五',
+            avatar: 'pic_2.png',
+            creditScore: 80,
+            posts: ['post2'] // 王五的发帖记录
+        },
+        '我': {
+            nickname: '我',
+            avatar: 'pic_3.png',
+            creditScore: 85,
+            posts: ['post1'] // 我的发帖记录
+        },
+        '拼单群': {
+            nickname: '拼单群',
+            avatar: 'https://www.w3schools.com/w3images/avatar2.png'
+        }
+    };
+
+    // 发帖记录
+    const posts = {
+        'post1': {
+            title: '老鼠药出售',
+            author: '张三',
+            content: '去年双11买的，现在800出',
+            timestamp: '2024-11-29 10:00',
+            image:'pic_1.png',
+            tag: '食品',
+            comments: [
+                { author: '我', content: '呃这真的允许卖吗', avatar: 'pic_3.png'},
+                { author: '王五', content: '挺不错的，值得考虑。', avatar: 'pic_2.png'}
+            ]
+        },
+        'post2': {
+            title: '出ipad pro 2018 11寸',
+            author: '王五',
+            content: '64g，使用率低，打算出掉，...',
+            timestamp: '2024-11-28 15:00',
+            image:'pic_2.png',
+            tag: '电子产品',
+            comments: [
+                { author: '张三', content: '有需要的联系我，价格可以谈。', avatar: 'pic_1.png'}
+            ]
+        },
+        'post3': {
+            title: '绝赞铲子转让',
+            author: '我',
+            content: '只埋了一次，5成新，期待出售，不接受砍价，谢谢',
+            timestamp: '2024-11-29 11:00',
+            image:'pic_3.png',
+            tag: '生活用品',
+            comments: [
+                { author: '我', content: '把这个东西卖掉也太抽象了', avatar: 'pic_3.png'}
+            ]
+        }
+    };
+
+    // 模拟的聊天数据库
+    const chatDatabase = {
+        '张三': [
+            { sender: '我', content: '最近怎么样？', timestamp: '2024-11-29 09:00' },
+            { sender: '张三', content: '还不错，你呢？', timestamp: '2024-11-29 09:01' }
+        ],
+        '王五': [
+            { sender: '我', content: '你好啊！', timestamp: '2024-11-29 08:30' },
+            { sender: '王五', content: '我很好，你呢？', timestamp: '2024-11-29 08:35' }
+        ],
+        '拼单群': [
+            { sender: '我', content: '大家好久不见了～', timestamp: '2024-11-29 07:00' },
+            { sender: '张三', content: '是啊，什么时候拼单？', timestamp: '2024-11-29 07:05' },
+            { sender: '王五', content: '我也有兴趣，等大家决定！', timestamp: '2024-11-29 07:10' }
+        ]
+    };
+
+    // 更新联系人列表
+    function updateContactList() {
+        const contactListContainer = document.getElementById('contactList');
+        contactListContainer.innerHTML = ''; // 清空当前列表
+
+        // 遍历聊天数据库，生成联系人列表
+        for (const contact in chatDatabase) {
+            const lastMessage = chatDatabase[contact][chatDatabase[contact].length - 1];
+            const contactItem = document.createElement('li');
+            contactItem.classList.add('contact-item');
+            contactItem.onclick = () => goToChat(contact);
+
+            // 创建联系人项
+            contactItem.innerHTML = `
+                <img src="${users[contact].avatar}" alt="头像">
+                <div>
+                    <div class="name">${users[contact].nickname}</div>
+                    <div class="last-message">${lastMessage.content}</div>
+                    <div class="credit-score">信誉评分: ${users[contact].creditScore}</div> <!-- 显示信誉评分 -->
+                </div>
+            `;
+
+            // 将联系人项添加到列表中
+            contactListContainer.appendChild(contactItem);
+        }
+    }
+
+    // 显示私聊记录
+    function goToChat(contactName) {
+        showPage('chat');
+        const chatBox = document.getElementById('chatBox');
+        chatBox.innerHTML = ''; // 清空聊天框
+
+        // 获取该联系人的聊天记录
+        const messages = chatDatabase[contactName];
+        messages.forEach(message => {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+            messageElement.innerHTML = `
+                <div class="sender">${message.sender}</div>
+                <div class="content">${message.content}</div>
+            `;
+            chatBox.appendChild(messageElement);
+        });
+
+        // 自动滚动到最新消息
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // 初始化时更新联系人列表
+    updateContactList();
+
+
+    // 发送消息
+    function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const chatBox = document.getElementById('chatBox');
+    const message = input.value.trim();
+    if (message) {
+        chatBox.innerHTML += `
+            <div class="message">
+                <div class="sender">你</div>
+                <div class="content">${message}</div>
+                <div class="timestamp">刚刚</div>
+            </div>
+        `;
+        input.value = '';
+        chatBox.scrollTop = chatBox.scrollHeight; // 自动滚动到最新消息
+        }
+    }
+
+    // 预览上传的文件
+    function previewFile() {
+        const fileInput = document.getElementById('fileInput');
+        const file = fileInput.files[0];
+        const preview = document.getElementById('filePreview');
+        preview.innerHTML = '';
+
+        if (file) {
+            const fileReader = new FileReader();
+            fileReader.onload = function (e) {
+                const fileType = file.type.split('/')[0];
+                if (fileType === 'image') {
+                    preview.innerHTML = `<img src="${e.target.result}" alt="预览图片">`;
+                } else if (fileType === 'video') {
+                    preview.innerHTML = `<video controls><source src="${e.target.result}" type="${file.type}"></video>`;
+                }
+            };
+            fileReader.readAsDataURL(file);
+        }
+    }
+
+
+    // 过滤帖子，根据选择的标签来显示
+    function filterPostsByTag(tag) {
+        currentTagFilter = tag; // 设置当前选中的标签
+        displayPosts(); // 重新渲染帖子
+    }
+
+    // 更新帖子列表显示
+    function displayPosts() {
+        const postsContainer = document.querySelector('.posts');
+        postsContainer.innerHTML = ''; // 清空当前帖子列表
+
+        Object.keys(posts).forEach(postId => {
+            const post = posts[postId];
+
+            // 如果有标签过滤且帖子的标签不匹配，则跳过
+            if (currentTagFilter && post.tag !== currentTagFilter) {
+                return;
+            }
+
+            const postElement = document.createElement('div');
+            postElement.classList.add('post');
+            postElement.onclick = () => showPostDetail(postId);
+
+            console.log(post.author);
+
+            postElement.innerHTML = `
+                <img src="${users[post.author].avatar}" class="avatar" alt="头像" onclick="goToChat('${post.author}')">
+                <div class="post-content">
+                    <div class="post-title">${post.title}</div>
+                    <div class="post-body">${post.content}</div>
+                    <div class="post-tag">tag: #${post.tag}</div>
+                    <div class="post-time">${post.timestamp}</div>
+                </div>
+            `;
+            postsContainer.appendChild(postElement);
+        });
+    }
+
+    // 显示帖子详情
+    function showPostDetail(postId) {
+        const post = posts[postId];
+        showPage('post-detail');
+
+        // 更新帖子信息
+        document.querySelector('.postTitle').textContent = post.title;
+        document.querySelector('.postAuthor').textContent = post.author;
+        document.querySelector('.postBody').textContent = post.content;
+        document.querySelector('.postTimestamp').textContent = `发布时间: ${post.timestamp}`;
+        document.querySelector('.postImage').src = post.image || 'https://via.placeholder.com/800x400';
+        document.querySelector('.postAvatar').src = users[post.author].avatar;
+
+        // 更新评论区
+        const commentsSection = document.querySelector('.comments');
+        commentsSection.innerHTML = '<h3>评论区</h3>';  // 重置评论区标题
+
+        // 填充评论
+        post.comments.forEach(comment => {
+            commentsSection.innerHTML += `
+                <div class="comment">
+                    <div class="comment-header">
+                        <img src="${comment.avatar}" class="comment-avatar" alt="头像">
+                        <div class="comment-author">${comment.author}</div>
+                    </div>
+                    <div class="comment-body">${comment.content}</div>
+                </div>
+            `;
+        });
+    }
+    
+    // 返回到上一页面
+    function goBack() {
+        const activePage = document.querySelector('.page[style="display: block;"]'); // 当前显示的页面
+        if (activePage) {
+            const parentPageId = activePage.getAttribute('data-parent'); // 获取父界面 ID
+            if (parentPageId) {
+                showPage(parentPageId); // 显示父界面
+            }
+        }
+    }
+
+    // 发布帖子
+    function submitPost() {
+        const title = document.getElementById('postTitle').value;
+        const content = document.getElementById('postContent').value;
+        const image = document.getElementById('postImage').files[0];
+        const tag = document.getElementById('postTags').value;
+
+        // console.log(title, content, image, tag);
+
+        if (!title || !content) {
+            alert("标题和内容不能为空！");
+            return;
+        }
+
+        // 上传图片并获取图片URL
+        let imageUrl = '';
+        if (image) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imageUrl = e.target.result;
+                createPost(title, content, imageUrl, tag);
+            };
+            reader.readAsDataURL(image);
+        } else {
+            createPost(title, content, imageUrl, tag);
+        }
+    }
+
+    // 创建帖子并添加到首页
+    function createPost(title, content, imageUrl, tag) {
+        const postId = `post${Date.now()}`; // 使用时间戳生成唯一的帖子ID
+        const post = {
+            title: title,
+            author: '我',
+            content: content,
+            image: imageUrl,
+            tag: tag,
+            timestamp: new Date().toLocaleString(),
+            comments: []
+        };
+
+        // 添加到帖子对象
+        posts[postId] = post;
+
+        // 在首页显示新的帖子
+        displayPosts();
+
+        // 返回首页
+        showPage('home');
+    }
+
+    // 图片预览
+    function previewImage(event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById('imagePreview');
+        preview.innerHTML = '';  // 清除之前的预览
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.innerHTML = `<img src="${e.target.result}" alt="预览图片" style="max-width: 100%;">`;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+
+    // 初始化首页显示帖子
+    displayPosts();
+
+    let selectedStorageSpot = ''; // 存储选中的存货柜子
+
+    // 显示存货/取货详细信息
+    function toggleTransactionOption() {
+        const action = document.getElementById('action').value;
+        const storeOption = document.getElementById('storeOption');
+        const retrieveOption = document.getElementById('retrieveOption');
+        const storageCode = document.getElementById('storageCode');
+
+        if (action === 'store') {
+            storeOption.style.display = 'block';
+            retrieveOption.style.display = 'none';
+            storageCode.style.display = 'none'; // 隐藏存货确认码
+        } else if (action === 'retrieve') {
+            storeOption.style.display = 'none';
+            retrieveOption.style.display = 'block';
+            storageCode.style.display = 'none'; // 隐藏存货确认码
+        }
+    }
+
+    // 选择存货柜子并生成确认码
+    function selectStorageSpot(spot) {
+        selectedStorageSpot = spot;
+        alert('选中了 ' + spot + '。请选择订单并点击确认生成确认码。');
+        console.log(selectedStorageSpot);
+    }
+
+    // 确认操作，生成4位随机确认码
+    function generateConfirmationCode() {
+        if (!selectedStorageSpot) {
+            alert('请先选择存货柜子！');
+            return;
+        }
+
+        // 生成4位随机数字
+        const confirmCode = Math.floor(1000 + Math.random() * 9000);
+        document.getElementById('confirmCode').value = confirmCode;
+
+        // 显示确认码输入框
+        document.getElementById('storageCode').style.display = 'block';
+    }
+
+    // 复制确认码
+    function copyCode() {
+        const confirmCodeInput = document.getElementById('confirmCode');
+        confirmCodeInput.select();
+        document.execCommand('copy');
+        alert('确认码已复制！');
+    }
+
+    // 取货操作
+    function retrieveItem() {
+        const retrievalCode = document.getElementById('retrievalCode').value;
+        const retrieveMessage = document.getElementById('retrieveMessage');
+        
+        if (retrievalCode.length === 4 && !isNaN(retrievalCode)) {
+            retrieveMessage.textContent = '开柜成功！';
+            retrieveMessage.style.color = 'green';
+        } else {
+            retrieveMessage.textContent = '请输入有效的四位取件码！';
+            retrieveMessage.style.color = 'red';
+        }
+    }
+
+    // 处理购买操作
+    function buyProduct(productName) {
+        alert(`您已购买: ${productName}`);
+    }
+
+    
+    // 默认加载时显示存货选项
+    toggleTransactionOption();
+
+
+
+</script>
+
+</body>
+</html>
