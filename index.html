@@ -19,9 +19,9 @@
     <!-- 热榜 -->
     <div class="hotlist">
         <h2>热榜</h2>
-        <div class="hot-item">#电子产品</div>
-        <div class="hot-item">#食品</div>
-        <div class="hot-item">#票务</div>
+        <div class="hot-item" onclick="filterPostsByTag('电子产品')">#电子产品</div>
+        <div class="hot-item" onclick="filterPostsByTag('食品')">#食品</div>
+        <div class="hot-item" onclick="filterPostsByTag('票务')">#票务</div>
     </div>
 </div>
 
@@ -32,20 +32,27 @@
         <input type="text" class="search-input" placeholder="搜索..." onclick="showPage('search')">
     </div>
 
+
+    <!-- 新增按钮 -->
+    <view class="button-container">
+        <button class="tab-button active" onclick="showPage('home')">帖子</button>
+        <button class="tab-button" onclick="showPage('store')">商店</button>
+    </view>
+
     <!-- 标签区域 -->
     <div class="tags">
-        <button class="tag-button" onclick="filterPostsByTag('电子产品')">电子产品</button>
-        <button class="tag-button" onclick="filterPostsByTag('食品')">食品</button>
-        <button class="tag-button" onclick="filterPostsByTag('书籍/资料')">书籍/资料</button>
-        <button class="tag-button" onclick="filterPostsByTag('交通工具')">交通工具</button>
-        <button class="tag-button" onclick="filterPostsByTag('生活用品')">生活用品</button>
-        <button class="tag-button" onclick="filterPostsByTag('票务')">票务</button>
+        <button class="tag-button" onclick="filterPostsByTag('电子产品')">#电子产品</button>
+        <button class="tag-button" onclick="filterPostsByTag('食品')">#食品</button>
+        <button class="tag-button" onclick="filterPostsByTag('书籍/资料')">#书籍/资料</button>
+        <button class="tag-button" onclick="filterPostsByTag('交通工具')">#交通工具</button>
+        <button class="tag-button" onclick="filterPostsByTag('生活用品')">#生活用品</button>
+        <button class="tag-button" onclick="filterPostsByTag('票务')">#票务</button>
     </div>
 
     <!-- 帖子区域 -->
     <div class="posts">
         <div class="post" onclick="showPostDetail('post1')">
-            <img src="https://www.w3schools.com/w3images/avatar2.png" class="avatar" alt="头像" onclick="goToChat('AAA老鼠药批发')">
+            <img src="https://www.w3schools.com/w3images/avatar2.png" class="avatar" alt="头像" onclick="goToChatChat('AAA老鼠药批发')">
             <div class="post-content">
                 <div class="post-title">二手屏幕</div>
                 <div class="post-body">去年双11买的，现在800出</div>
@@ -78,6 +85,41 @@
 
     <!-- 加号按钮 -->
     <button class="add-post-btn" onclick="showPage('create-post')">+</button>
+</div>
+
+<!-- 商店页面 -->
+<div id="store" class="content page">
+    <!-- 搜索栏 -->
+    <div class="search-bar">
+        <input type="text" class="search-input" placeholder="搜索..." onclick="showPage('search')">
+    </div>
+
+    <!-- 新增按钮 -->
+    <view class="button-container">
+        <button class="tab-button" onclick="showPage('home')">帖子</button>
+        <button class="tab-button" onclick="showPage('store')">商店</button>
+    </view>
+
+    <!-- 标签区域 -->
+    <div class="tags">
+        <button class="tag-button" onclick="filterProductsByTag('创协')">#创协</button>
+        <button class="tag-button" onclick="filterProductsByTag('学校')">#学校</button>
+        <button class="tag-button" onclick="filterProductsByTag('INFO')">#INFO</button>
+        <button class="tag-button" onclick="filterProductsByTag('SMMG')">#SMMG</button>
+    </div>
+
+    <!-- 价格过滤区域 -->
+    <div class="price-filter">
+        <button onclick="filterProductsByPrice(0, 100)">价格: 0 - 100</button>
+        <button onclick="filterProductsByPrice(100, 200)">价格: 100 - 200</button>
+        <button onclick="filterProductsByPrice(200, 300)">价格: 200 - 300</button>
+        <button onclick="showAllProducts()">显示全部商品</button>
+    </div>
+
+    <!-- 商品区域 -->
+    <div class="products">
+        <!-- 商品将在这里动态渲染 -->
+    </div>
 </div>
 
 
@@ -280,54 +322,22 @@
         <ul>
             <li onclick="uploadFile()">上传文件</li>
             <li onclick="rateUser()">信用评分</li>
+            <li onclick="quickBargain()">快速议价</li>
         </ul>
     </div>
 
+    <!-- 快速议价弹窗 -->
+    <div id="quickBargainWindow" class="quick-bargain-window" style="display:none;">
+        <label for="bargainPrice">请输入议价价格：</label>
+        <input type="number" id="bargainPrice" placeholder="请输入价格" />
+        <button onclick="confirmBargain()">确认议价</button>
+    </div>
+
+    <!-- 交易结果显示 -->
+    <div id="bargainResult"></div>
+
     <!-- 文件上传区域 -->
     <div class="preview" id="filePreview"></div>
-</div>
-
-
-<!-- 商店页面 -->
-<div id="store" class="content page">
-    <!-- 搜索栏 -->
-    <div class="search-bar">
-        <input type="text" class="search-input" placeholder="搜索..." onclick="showPage('search')">
-    </div>
-
-    <!-- 商品区域 -->
-    <div class="products">
-        <!-- 商品1: 信小鹰 -->
-        <div class="product">
-            <img src="eagle.png" class="avatar" alt="头像">
-            <div class="product-content">
-                <div class="product-title">信小鹰</div>
-                <div class="product-body">来自info</div>
-            </div>
-            <button class="buy-button" onclick="buyProduct('信小鹰')">购买</button>
-        </div>
-
-        <!-- 商品3: 红鸟 -->
-        <div class="product">
-            <img src="red_bird.png" class="avatar" alt="头像">
-
-            <div class="product-content">
-                <div class="product-title">红鸟</div>
-                <div class="product-body">红火火</div>
-            </div>
-            <button class="buy-button" onclick="buyProduct('红鸟')">购买</button>
-        </div>
-
-        <!-- 商品4: 塔塔 -->
-        <div class="product">
-            <img src="tata_pic.png" class="avatar" alt="头像">
-            <div class="product-content">
-                <div class="product-title">塔塔</div>
-                <div class="product-body">来自创协</div>
-            </div>
-            <button class="buy-button" onclick="buyProduct('塔塔')">购买</button>
-        </div>
-    </div>
 </div>
 
 
@@ -345,13 +355,68 @@
     </div>
 </div>
 
+<!-- 个人界面 -->
+<div id="profile" class="content page">
+    <!-- 个人信息区 -->
+    <div class="profile-info">
+        <!-- 头像和昵称 -->
+        <div class="profile-header">
+            <img src="pic_3.png" alt="头像" class="profile-avatar">
+            <div class="profile-details">
+                <h2 class="profile-name">我</h2>
+                <p class="profile-credit">信用评分: <span>4.5</span></p>  <!-- 信用评分 -->
+            </div>
+        </div>
+
+        <!-- 个人简介 -->
+        <div class="profile-bio">
+            <p>自我介绍：一个好人</p>
+        </div>
+
+        <!-- 联系方式 -->
+        <div class="contact-info">
+            <p>联系方式：<span>微信：example_wechat</span></p>
+            <p>Email：<span>example@email.com</span></p>
+        </div>
+
+        <!-- 交易信息 -->
+        <div class="transaction-info">
+            <p>交易成功：<span>50次</span></p>
+            <p>成交总金额：<span>¥5000</span></p>
+        </div>
+
+        <!-- 我的需求功能 -->
+        <div class="my-needs">
+            <h3>我的需求</h3>
+            <form id="need-form">
+                <input type="text" id="user-demand" placeholder="请输入您的需求">
+                <button onclick="saveUserDemand()">保存需求</button>
+            </form>
+            <p id="need-msg" class="need-msg"></p>
+        </div>
+
+        <!-- 完善个人信息按钮 -->
+        <button class="btn-edit" onclick="showPage('payment-code')">完善个人信息</button>
+    </div>
+</div>
+
+<!-- 收款码页面 -->
+<div id="payment-code" class="content page" data-parent="profile">
+    <button onclick="goBack()">返回</button>
+    <h2>收款码</h2>
+    <p>请上传您的收款码以便于交易</p>
+    <!-- 输入框来上传收款码 -->
+    <input type="file" id="paymentQrCode" accept="image/*">
+    <div id="preview" style="margin-top: 10px;"></div>
+</div>
+
 
 <!-- 导航栏 -->
 <nav>
     <a href="#" onclick="showPage('home')">首页</a>
     <a href="#" onclick="showPage('storage')">存取</a>
     <a href="#" onclick="showPage('chat-list')">私聊</a>
-    <a href="#" onclick="showPage('store')">商店</a>
+    <a href="#" onclick="showPage('profile')">个人</a>
 </nav>
 
 <!-- JavaScript -->
@@ -413,6 +478,7 @@
     // 发帖记录
     const posts = {
         'post1': {
+            id: 1,
             title: '老鼠药出售',
             author: 'AAA老鼠药批发',
             content: '去年双11买的，现在800出',
@@ -425,6 +491,7 @@
             ]
         },
         'post2': {
+            id: 2,
             title: '出ipad pro 2018 11寸',
             author: '绝赞泥头车',
             content: '64g，使用率低，打算出掉，...',
@@ -436,6 +503,7 @@
             ]
         },
         'post3': {
+            id: 3,
             title: '绝赞铲子转让',
             author: '我',
             content: '只埋了一次，5成新，期待出售，不接受砍价，谢谢',
@@ -447,12 +515,13 @@
             ]
         },
         'post4': {
+            id: 4,
             title: 'tb47电池拼单',
             author: '我',
             content: '二手tb47电池一块50，一块使用两次就能扔，有需要的联系我。型号：8.4V 400mAh锂电池；12.6V 300mAh锂电池；3.7V 1200mAh锂电池',
             timestamp: '2024-10-29 11:00',
             image:'tb47.png',
-            tag: '电子产品',
+            tag: '交通工具',
             comments: [
                 { author: 'AAA老鼠药批发', content: '666666666666', avatar: 'pic_1.png'}
             ]
@@ -480,6 +549,38 @@
             { sender: '绝赞泥头车', content: '未付款，期待发货', timestamp: '2024-11-29 07:10' }
         ]
     };
+    
+    //商店商品
+    const products = [
+    {
+        name: '信小鹰',
+        category: 'INFO',
+        description: '来自info',
+        price: 120,  // 商品价格
+        image: 'eagle.png'
+    },
+    {
+        name: '红鸟',
+        category: '学校',
+        description: '红火火',
+        price: 250,  // 商品价格
+        image: 'red_bird.png'
+    },
+    {
+        name: '塔塔',
+        category: '创协',
+        description: '来自创协',
+        price: 80,  // 商品价格
+        image: 'tata_pic.png'
+    },
+    {
+        name: '章鱼',
+        category: 'SMMG',
+        description: '来自SMMG',
+        price: 280,  // 商品价格
+        image: 'SMMG_oct.jpg'
+    }
+];
 
     // 更新联系人列表
     function updateContactList() {
@@ -510,8 +611,8 @@
 
     // 显示操作选择菜单
     function showOptionsMenu() {
-        const menu = document.getElementById('optionsMenu');
-        menu.style.display = 'block';
+        const optionsMenu  = document.getElementById('optionsMenu');
+        optionsMenu.style.display = optionsMenu.style.display === 'none' ? 'block' : 'none';
     }
 
     // 上传文件功能
@@ -563,35 +664,57 @@
         updateContactList(); // 更新联系人列表
     }
 
+    function quickBargain() {
+        const quickBargainWindow = document.getElementById('quickBargainWindow');
+        quickBargainWindow.style.display = 'block';
+    }
+
+    // 确认议价
+    function confirmBargain() {
+        const bargainPrice = document.getElementById('bargainPrice').value;
+        const bargainResult = document.getElementById('bargainResult');
+
+        if (bargainPrice) {
+            const userResponse = prompt('对方是否同意？输入1表示同意，输入2表示不同意');
+            if (userResponse === '1') {
+                console.log(1);
+                bargainResult.textContent = `价格已修改为: ${bargainPrice}元，交易已确认。`;
+            } else if (userResponse === '2') {
+                console.log(2);
+                bargainResult.textContent = '对方不同意修改价格。';
+            } else {
+                bargainResult.textContent = '输入无效，请输入1或2。';
+            }
+        } else {
+            bargainResult.textContent = '请输入有效的议价价格。';
+        }
+
+        // 关闭议价窗口
+        document.getElementById('quickBargainWindow').style.display = 'none';
+    }
+    
+    // 存储用户需求到本地
+    let userDemand = '';  // 默认没有需求
+
+    function saveUserDemand() {
+        userDemand = document.getElementById('user-demand').value.trim();
+        alert('您的需求已保存！');
+        // 你可以将用户需求保存到localStorage或者服务器
+        console.log('用户需求：', userDemand);
+        localStorage.setItem('userDemand', userDemand);  // 将需求存储到localStorage
+    }
+
     // 显示私聊记录
     function goToChat(contactName) {
         showPage('chat');
         const chatBox = document.getElementById('chatBox');
-        chatBox.innerHTML = ''; // 清空聊天框
+        chatBox.innerHTML = '';  // 清空聊天框
 
         // 获取该联系人的聊天记录
         const messages = chatDatabase[contactName];
         messages.forEach(message => {
             const messageElement = document.createElement('div');
             messageElement.classList.add('message');
-
-            // 如果消息是文件类型，则显示预览
-            let messageContent = '';
-            if (message.type === 'text') {
-                messageContent = `<div class="content">${message.content}</div>`;
-            } else if (message.type === 'file') {
-                // 处理文件类型，假设文件类型为图片
-                messageContent = `<div class="content">
-                    <img src="${message.fileUrl}" class="file-preview" />
-                    <span>点击查看文件</span>
-                </div>`;
-            } else if (message.type === 'rating') {
-                // 处理评分类型的消息
-                messageContent = `<div class="content">
-                    <span>${message.sender} 给你打了一个评分: ${message.rating}</span>
-                </div>`;
-            }
-
             messageElement.innerHTML = `
                 <div class="sender">${message.sender}</div>
                 <div class="content">${message.content}</div>
@@ -599,8 +722,37 @@
             chatBox.appendChild(messageElement);
         });
 
-        // 自动滚动到最新消息
-        chatBox.scrollTop = chatBox.scrollHeight;
+        // 获取用户的需求
+        const userDemand = localStorage.getItem('userDemand') || '';  // 从localStorage获取需求
+
+        if (userDemand) {
+            // 如果用户有需求，搜索帖子数据库并匹配标题
+            const matchedPosts = Object.values(posts).filter(post =>
+                post.title.includes(userDemand)  // 标题包含需求内容
+            );
+
+            if (matchedPosts.length > 0 & userDemand) {
+                // 如果找到匹配的帖子且需求不为空，自动发送消息给用户
+                const matchedPost = matchedPosts[0];  // 只取第一个匹配的帖子
+                const message = `找到这条新帖子可能满足您的需求：\n${matchedPost.title} \n点击链接查看详情：${window.location.origin}/post/${matchedPost.id}`;
+                chatBox.innerHTML += `
+                    <div class="message">
+                        <div class="sender">交易小助手机器人</div>
+                        <div class="content">${message}</div>
+                    </div>
+                `;
+            } else {
+                chatBox.innerHTML += `
+                    <div class="message">
+                        <div class="sender">交易小助手机器人</div>
+                        <div class="content">暂时没有找到符合您需求的帖子哦！</div>
+                    </div>
+                `;
+            }
+    }
+
+    // 自动滚动到最新消息
+    chatBox.scrollTop = chatBox.scrollHeight;
     }
 
     // 初始化时更新联系人列表
@@ -609,19 +761,19 @@
 
     // 发送消息
     function sendMessage() {
-    const input = document.getElementById('chatInput');
-    const chatBox = document.getElementById('chatBox');
-    const message = input.value.trim();
-    if (message) {
-        chatBox.innerHTML += `
-            <div class="message">
-                <div class="sender">你</div>
+        const chatInput = document.getElementById('chatInput');
+        const message = chatInput.value.trim();
+        if (message) {
+            const chatBox = document.getElementById('chatBox');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+            messageElement.innerHTML = `
+                <div class="sender">我</div>
                 <div class="content">${message}</div>
-                <div class="timestamp">刚刚</div>
-            </div>
-        `;
-        input.value = '';
-        chatBox.scrollTop = chatBox.scrollHeight; // 自动滚动到最新消息
+            `;
+            chatBox.appendChild(messageElement);
+            chatInput.value = '';  // 清空输入框
+            chatBox.scrollTop = chatBox.scrollHeight;  // 滚动到最新消息
         }
     }
 
@@ -649,7 +801,16 @@
 
     // 过滤帖子，根据选择的标签来显示
     function filterPostsByTag(tag) {
-        currentTagFilter = tag; // 设置当前选中的标签
+        console.log(currentTagFilter);
+        if (currentTagFilter === tag) {
+        // 如果当前标签已经被选中，再次点击时显示所有帖子
+            currentTagFilter = null;
+        } else {
+            // 否则，设置为点击的标签
+            currentTagFilter = tag;
+        }
+        // // 显示首页并重新渲染帖子
+        // showPage('home');
         displayPosts(); // 重新渲染帖子
     }
 
@@ -861,12 +1022,89 @@
         }
     }
 
+    let currentPriceFilter = null;  // 当前的价格过滤
+    let currentProductTagFilter = null;  // 当前的标签过滤
+
+    // 过滤不同学域的商品
+    function filterProductsByTag(tag) {
+        if (currentProductTagFilter === tag) {
+            // 如果当前标签已经被选中，再次点击时显示所有帖子
+            currentProductTagFilter = null;
+        } else {
+            // 否则，设置为点击的标签
+            currentProductTagFilter = tag;
+        }
+
+        displayProducts(); // 重新渲染帖子
+    }
+    
+    // 过滤价格范围的函数
+    function filterProductsByPrice(min, max) {
+        currentPriceFilter = { min, max };  // 设置当前的价格过滤范围
+        displayProducts();  // 重新渲染商品列表
+    }
+
+    // 显示所有商品
+    function showAllProducts() {
+        currentPriceFilter = null;  // 清空价格过滤
+        currentProductTagFilter = null;  // 清空标签过滤
+        displayProducts();  // 重新渲染商品列表
+    }
+
+    // 更新商品显示
+    function displayProducts() {
+        const productsContainer = document.querySelector('.products');
+        productsContainer.innerHTML = '';  // 清空当前商品列表
+
+        const filteredProducts = products.filter(product => {
+            // 如果有标签过滤，检查商品是否匹配标签
+            if (currentProductTagFilter && product.category !== currentProductTagFilter) {
+                return false;  // 不符合标签过滤条件的商品被过滤掉
+            }
+
+            // 如果有价格过滤，检查商品的价格是否在范围内
+            if (currentPriceFilter && (product.price < currentPriceFilter.min || product.price > currentPriceFilter.max)) {
+                return false;  // 不符合价格过滤条件的商品被过滤掉
+            }
+            return true;  // 没有过滤时，显示所有商品
+        });
+
+        // 渲染商品
+        filteredProducts.forEach(product => {
+            const productElement = document.createElement('div');
+            productElement.classList.add('product');
+
+            productElement.innerHTML = `
+                <img src="${product.image}" class="avatar" alt="头像">
+                <div class="product-content">
+                    <div class="product-title">${product.name}</div>
+                    <div class="product-body">${product.description}</div>
+                    <div class="product-price">价格: ¥${product.price}</div>
+                </div>
+                <button class="buy-button" onclick="buyProduct('${product.name}')">购买</button>
+            `;
+
+            productsContainer.appendChild(productElement);
+        });
+    }
+
+
     // 处理购买操作
     function buyProduct(productName) {
         alert(`您已购买: ${productName}`);
     }
 
+
     
+    // 保存个人信息
+    function saveProfile() {
+        const paymentCode = document.getElementById('paymentCode').value;
+        alert('个人信息已保存：' + paymentCode);
+        showPage('profile');
+    }
+    
+
+
     // 默认加载时显示存货选项
     toggleTransactionOption();
 
